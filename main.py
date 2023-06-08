@@ -1,6 +1,6 @@
 from prody import pathPDBFolder
 from readscope import readScope
-from helixcount import hcount
+from createDomain import createDomain
 from sse2vector import sse2vector
 from SecStruct import getAngle, compareOrientation
 
@@ -10,11 +10,11 @@ def main():
 	pClass = 'a' # all alpha proteins
 
 	domainList = readScope(filename, pClass)
-	helices = hcount(domainList[2])
-	print(len(helices))
+	domain = createDomain(domainList[2])
+	print(domain.size())
 
-	testh = sse2vector(domainList[2]['pdbid'], helices[0])
-	for helix in helices:
+	testh = sse2vector(domainList[2]['pdbid'], domain.getStructs()[0])
+	for helix in domain.getStructs():
 		print(compareOrientation(sse2vector(domainList[2]['pdbid'], helix), testh))
 		
 
