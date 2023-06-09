@@ -1,4 +1,4 @@
-import SecStruct
+from SecStruct import SecStruct, compareOrientation
 
 class Domain:
     
@@ -24,3 +24,23 @@ class Domain:
     def getStructs(self) -> list:
         return self._structs
     
+# TODO: implement generateGraph() function which will take a domain and generate a graph based on the structures in that graph
+
+def genGraph(dom: Domain):
+    size = dom.size()
+    graphMat = [['0' for j in range(size)] for i in range(size)] # create a 2d array
+    structs = dom.getStructs()
+
+    # compare every SecStruct to each other
+    for i in range(size):
+        for j in range(size):
+            if structs[i] != structs[j]: # don't compare the same SecStruct objects
+                match compareOrientation(structs[i], structs[j]):
+                    case "ANTIPARALLEL":
+                        graphMat[i][j] = 'A'
+                    case "PARALLEL":
+                        graphMat[i][j] = 'P'
+                    case "MIXED":
+                        graphMat[i][j] = 'M'
+    
+    return graphMat

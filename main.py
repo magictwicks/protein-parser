@@ -1,8 +1,13 @@
 from prody import pathPDBFolder
 from readscope import readScope
 from createDomain import createDomain
-from sse2vector import sse2vector
-from SecStruct import getAngle, compareOrientation
+from Domain import genGraph, Domain
+from SecStruct import getAngle, getStructDist
+
+def printList(list):
+	for l in list:
+		print(l)
+
 
 def main():
 	pathPDBFolder('./pdb_archive') # sets folder for PDB files to be downloaded to 
@@ -10,12 +15,11 @@ def main():
 	pClass = 'a' # all alpha proteins
 
 	domainList = readScope(filename, pClass)
-	domain = createDomain(domainList[2])
-	print(domain.size())
+	domain = createDomain(domainList[3])
+	printList(genGraph(domain))
+	# structs = domain.getStructs()
 
-	testh = sse2vector(domainList[2]['pdbid'], domain.getStructs()[0])
-	for helix in domain.getStructs():
-		print(compareOrientation(sse2vector(domainList[2]['pdbid'], helix), testh))
+	# print(getStructDist(structs[1], structs[4]))
 		
 
 if __name__ == '__main__':

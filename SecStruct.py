@@ -66,8 +66,9 @@ def getDistance(p1: tuple, p2: tuple) -> float:
 
 
 def compareOrientation(s1: SecStruct, s2: SecStruct):
-    VALID_DIST = 100000 # TODO: find good dist value (probably bruteforce)
-    MARGIN = 15
+    VALID_DIST = 23 # TODO: find good dist value (probably bruteforce)
+    MIXED_MARGIN = 15
+    PARALLEL_MARGIN = 25
     
     structDist = getStructDist(s1, s2)
     
@@ -76,11 +77,11 @@ def compareOrientation(s1: SecStruct, s2: SecStruct):
     
     angleBetween = getAngle(s1, s2)
 
-    if angleBetween < MARGIN:
-        return "ANTIPARALLEL"
-    elif angleBetween > 90 - MARGIN and angleBetween < 90 + MARGIN:
-        return "MIXED"
-    elif angleBetween > 180 - MARGIN:
+    if angleBetween < PARALLEL_MARGIN:
         return "PARALLEL"
+    elif angleBetween > 90 - MIXED_MARGIN and angleBetween < 90 + MIXED_MARGIN:
+        return "MIXED"
+    elif angleBetween > 180 - PARALLEL_MARGIN:
+        return "ANTIPARALLEL"
     else:
         return "NONE"
